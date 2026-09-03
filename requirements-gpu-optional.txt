@@ -1,0 +1,2 @@
+# Optional / not validated in this release
+cupy

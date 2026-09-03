@@ -1,0 +1,47 @@
+{
+  "release": "3.0.0-research",
+  "benchmark": "localized-vortex-periodic-Re300",
+  "cases": [
+    {
+      "NF": 32,
+      "representation": "SUBFACE_SPARSE",
+      "dt": 0.005,
+      "t_final": 0.2,
+      "state_dofs": 29364,
+      "L2": 0.05311733082469637,
+      "energy_error": 0.021193795660787232
+    },
+    {
+      "NF": 32,
+      "representation": "MODAL_STREAM",
+      "dt": 0.005,
+      "t_final": 0.2,
+      "state_dofs": 11329,
+      "L2": 0.06270015560883498,
+      "energy_error": 0.022311008167695465
+    },
+    {
+      "NF": 64,
+      "representation": "SUBFACE_SPARSE",
+      "dt": 0.0025,
+      "t_final": 0.2,
+      "state_dofs": 125520,
+      "L2": 0.04467617691441254,
+      "energy_error": 0.004778687671845237
+    },
+    {
+      "NF": 64,
+      "representation": "MODAL_STREAM",
+      "dt": 0.0025,
+      "t_final": 0.2,
+      "state_dofs": 33926,
+      "L2": 0.058990642715068695,
+      "energy_error": 0.006488331482520376
+    }
+  ],
+  "gates": {
+    "relative_L2_delta_max": 0.0005,
+    "relative_energy_delta_max": 0.0005,
+    "RMS_divergence_max": 1e-14
+  }
+}

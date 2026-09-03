@@ -1,0 +1,7 @@
+NF,Objective,Expected,Selected,PASS,Reason
+32,FAST,SUBFACE_SPARSE,SUBFACE_SPARSE,True,runtime difference within 5% tie band or sparse is faster; prefer simpler/more accurate baseline
+32,AUTO,SUBFACE_SPARSE,SUBFACE_SPARSE,True,runtime difference within 5% tie band or sparse is faster; prefer simpler/more accurate baseline
+32,COMPACT,MODAL_STREAM,MODAL_STREAM,True,explicit compact-state objective
+64,FAST,SUBFACE_SPARSE,SUBFACE_SPARSE,True,runtime difference within 5% tie band or sparse is faster; prefer simpler/more accurate baseline
+64,AUTO,SUBFACE_SPARSE,SUBFACE_SPARSE,True,runtime difference within 5% tie band or sparse is faster; prefer simpler/more accurate baseline
+64,COMPACT,MODAL_STREAM,MODAL_STREAM,True,explicit compact-state objective

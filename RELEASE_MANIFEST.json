@@ -1,0 +1,27 @@
+{
+  "name": "TAYLANUS",
+  "version": "3.0.0-research",
+  "date": "2026-09-03",
+  "status": "stable research core",
+  "release_gates": {
+    "numerical_regression": true,
+    "planner_policy": true,
+    "topology_cache": true,
+    "gpu_execution_validated": false
+  },
+  "default_policy": {
+    "FAST": "SUBFACE_SPARSE",
+    "AUTO": "SUBFACE_SPARSE",
+    "COMPACT": "MODAL_STREAM"
+  },
+  "validated_equivalent_resolutions": [
+    32,
+    64
+  ],
+  "known_nonclaims": [
+    "No ANSYS equivalence",
+    "No production-CFD validation",
+    "No general speed superiority",
+    "No validated GPU performance"
+  ]
+}

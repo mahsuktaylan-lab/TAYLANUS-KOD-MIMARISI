@@ -1,0 +1,111 @@
+{
+  "version": "2.23",
+  "status": "unified backend-ready research core candidate",
+  "core": "single topology-signature compiler/cache with SUBFACE_SPARSE and MODAL_STREAM representations",
+  "planner_policy": [
+    {
+      "NF": 32,
+      "Objective": "FAST",
+      "Selected": "SUBFACE_SPARSE",
+      "Reason": "runtime difference within 5% tie band or sparse is faster; prefer simpler/more accurate baseline"
+    },
+    {
+      "NF": 32,
+      "Objective": "COMPACT",
+      "Selected": "MODAL_STREAM",
+      "Reason": "explicit compact-state objective"
+    },
+    {
+      "NF": 32,
+      "Objective": "AUTO",
+      "Selected": "SUBFACE_SPARSE",
+      "Reason": "runtime difference within 5% tie band or sparse is faster; prefer simpler/more accurate baseline"
+    },
+    {
+      "NF": 64,
+      "Objective": "FAST",
+      "Selected": "SUBFACE_SPARSE",
+      "Reason": "runtime difference within 5% tie band or sparse is faster; prefer simpler/more accurate baseline"
+    },
+    {
+      "NF": 64,
+      "Objective": "COMPACT",
+      "Selected": "MODAL_STREAM",
+      "Reason": "explicit compact-state objective"
+    },
+    {
+      "NF": 64,
+      "Objective": "AUTO",
+      "Selected": "SUBFACE_SPARSE",
+      "Reason": "runtime difference within 5% tie band or sparse is faster; prefer simpler/more accurate baseline"
+    }
+  ],
+  "robust_benchmark": [
+    {
+      "NF": 32,
+      "Representation": "SUBFACE_SPARSE",
+      "Runs": 3,
+      "Median runtime s": 0.26635555300003944,
+      "Min runtime s": 0.20389866400000756,
+      "Max runtime s": 0.31395843200004947,
+      "State DOFs": 29364,
+      "Final L2": 0.05311733082469637,
+      "Energy error": 0.021193795660787232,
+      "RMS divergence": 1.519458937866445e-17
+    },
+    {
+      "NF": 32,
+      "Representation": "MODAL_STREAM",
+      "Runs": 3,
+      "Median runtime s": 0.26096021299997574,
+      "Min runtime s": 0.2588590689999819,
+      "Max runtime s": 0.2774380339999425,
+      "State DOFs": 11329,
+      "Final L2": 0.06270015560883498,
+      "Energy error": 0.022311008167695465,
+      "RMS divergence": 1.5130444316158075e-17
+    },
+    {
+      "NF": 64,
+      "Representation": "SUBFACE_SPARSE",
+      "Runs": 3,
+      "Median runtime s": 1.9585419520000187,
+      "Min runtime s": 1.9471666399999776,
+      "Max runtime s": 1.997461653000073,
+      "State DOFs": 125520,
+      "Final L2": 0.04467617691441254,
+      "Energy error": 0.004778687671845237,
+      "RMS divergence": 2.8325470111195656e-17
+    },
+    {
+      "NF": 64,
+      "Representation": "MODAL_STREAM",
+      "Runs": 3,
+      "Median runtime s": 1.970432609999989,
+      "Min runtime s": 1.9182757270000366,
+      "Max runtime s": 2.013798654000084,
+      "State DOFs": 33926,
+      "Final L2": 0.058990642715068695,
+      "Energy error": 0.006488331482520376,
+      "RMS divergence": 2.9166531252124005e-17
+    }
+  ],
+  "cache": {
+    "changed_topology_cold_wall_s": 2.0379737839999734,
+    "same_topology_warm_wall_s": 0.004475118999948791,
+    "warm_speedup": 455.40102598909533
+  },
+  "backend_status": {
+    "CPU_NUMPY_SCIPY": "EXECUTED",
+    "GPU_CUPY": "GENERATED_NOT_EXECUTED"
+  },
+  "v3_exit_assessment": {
+    "one_compiler_pipeline": true,
+    "shared_topology_cache": true,
+    "64_equivalent_scaling_path": true,
+    "long_time_error_characterized": true,
+    "gpu_execution_validated": false,
+    "production_CFD_validation": false
+  },
+  "next": "v3.0 stabilization/reproducibility package, not another algorithmic feature version unless a blocker appears"
+}

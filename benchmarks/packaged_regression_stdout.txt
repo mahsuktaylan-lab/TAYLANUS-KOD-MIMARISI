@@ -1,0 +1,15 @@
+NF=32 SUBFACE_SPARSE  L2=0.05311733 Eerr=0.02119380 DOFs=29364 div=1.519e-17 PASS=True
+NF=32 MODAL_STREAM    L2=0.06270016 Eerr=0.02231101 DOFs=11329 div=1.513e-17 PASS=True
+NF=64 SUBFACE_SPARSE  L2=0.04467618 Eerr=0.00477869 DOFs=125520 div=2.833e-17 PASS=True
+NF=64 MODAL_STREAM    L2=0.05899064 Eerr=0.00648833 DOFs=33926 div=2.917e-17 PASS=True
+TAYLANUS v3.0 numerical regression: PASS
+Spreadsheet runtime warmup failed during python startup
+Traceback (most recent call last):
+  File "/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py", line 26, in warm_spreadsheet_runtime_on_startup
+  File "/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/spreadsheet_warmup.py", line 785, in warm_spreadsheet_runtime
+  File "/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/spreadsheet_warmup.py", line 720, in _warm_feature_flows
+  File "/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/spreadsheet_warmup.py", line 704, in _warm_collaboration_flows
+  File "/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/generated/interface/models.py", line 32317, in hydrate_crdt_from_proto
+  File "/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/rpc/remote.py", line 749, in __call__
+  File "/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/rpc/client.py", line 150, in call
+artifact_tool.rpc.client.RemoteError: hydrateCrdtFromProto requires an empty collaborative document.

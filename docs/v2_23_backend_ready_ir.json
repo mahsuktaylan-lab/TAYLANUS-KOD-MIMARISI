@@ -1,0 +1,176 @@
+{
+  "version": "2.23",
+  "semantic_ir": {
+    "domain": {
+      "dim": 3,
+      "boundary": "periodic"
+    },
+    "fields": [
+      {
+        "name": "pressure",
+        "location": "cell"
+      },
+      {
+        "name": "velocity_normal",
+        "location": "face"
+      }
+    ],
+    "primitive": "SAMPLE_FACE(field, axis, direction, scale)",
+    "equations": [
+      "incompressible momentum",
+      "pressure projection"
+    ]
+  },
+  "topology_ir": {
+    "type": "octree",
+    "signature": "SHA1(sorted leaf keys + NF)",
+    "cache_layers": [
+      "geometry",
+      "sparse_subface_ir",
+      "streaming_modal_maps",
+      "projection"
+    ]
+  },
+  "representations": {
+    "SUBFACE_SPARSE": {
+      "origin": "v2.16",
+      "state": "active face-normal DOFs",
+      "operators": "sparse direction+scale+neighbor",
+      "status": "validated CPU baseline"
+    },
+    "MODAL_STREAM": {
+      "origin": "v2.22",
+      "state": "mean + up to two tangential slope modes per geometric face",
+      "global_P_R_Q_G_L": false,
+      "execution": "local modal<->subface streaming around shared sparse operator",
+      "status": "validated compact-state CPU branch"
+    }
+  },
+  "planner": {
+    "tie_band_percent": 5,
+    "FAST": "choose modal only if robust runtime >5% faster; otherwise subface",
+    "COMPACT": "modal",
+    "AUTO": "runtime + setup + memory + accuracy; current CPU calibration selects subface at 32 and 64",
+    "current_cpu_policy": [
+      {
+        "NF": 32,
+        "Objective": "FAST",
+        "Selected": "SUBFACE_SPARSE",
+        "Reason": "runtime difference within 5% tie band or sparse is faster; prefer simpler/more accurate baseline"
+      },
+      {
+        "NF": 32,
+        "Objective": "COMPACT",
+        "Selected": "MODAL_STREAM",
+        "Reason": "explicit compact-state objective"
+      },
+      {
+        "NF": 32,
+        "Objective": "AUTO",
+        "Selected": "SUBFACE_SPARSE",
+        "Reason": "runtime difference within 5% tie band or sparse is faster; prefer simpler/more accurate baseline"
+      },
+      {
+        "NF": 64,
+        "Objective": "FAST",
+        "Selected": "SUBFACE_SPARSE",
+        "Reason": "runtime difference within 5% tie band or sparse is faster; prefer simpler/more accurate baseline"
+      },
+      {
+        "NF": 64,
+        "Objective": "COMPACT",
+        "Selected": "MODAL_STREAM",
+        "Reason": "explicit compact-state objective"
+      },
+      {
+        "NF": 64,
+        "Objective": "AUTO",
+        "Selected": "SUBFACE_SPARSE",
+        "Reason": "runtime difference within 5% tie band or sparse is faster; prefer simpler/more accurate baseline"
+      }
+    ]
+  },
+  "validated_benchmarks": [
+    {
+      "NF": 32,
+      "Representation": "SUBFACE_SPARSE",
+      "Runs": 3,
+      "Median runtime s": 0.26635555300003944,
+      "Min runtime s": 0.20389866400000756,
+      "Max runtime s": 0.31395843200004947,
+      "State DOFs": 29364,
+      "Final L2": 0.05311733082469637,
+      "Energy error": 0.021193795660787232,
+      "RMS divergence": 1.519458937866445e-17
+    },
+    {
+      "NF": 32,
+      "Representation": "MODAL_STREAM",
+      "Runs": 3,
+      "Median runtime s": 0.26096021299997574,
+      "Min runtime s": 0.2588590689999819,
+      "Max runtime s": 0.2774380339999425,
+      "State DOFs": 11329,
+      "Final L2": 0.06270015560883498,
+      "Energy error": 0.022311008167695465,
+      "RMS divergence": 1.5130444316158075e-17
+    },
+    {
+      "NF": 64,
+      "Representation": "SUBFACE_SPARSE",
+      "Runs": 3,
+      "Median runtime s": 1.9585419520000187,
+      "Min runtime s": 1.9471666399999776,
+      "Max runtime s": 1.997461653000073,
+      "State DOFs": 125520,
+      "Final L2": 0.04467617691441254,
+      "Energy error": 0.004778687671845237,
+      "RMS divergence": 2.8325470111195656e-17
+    },
+    {
+      "NF": 64,
+      "Representation": "MODAL_STREAM",
+      "Runs": 3,
+      "Median runtime s": 1.970432609999989,
+      "Min runtime s": 1.9182757270000366,
+      "Max runtime s": 2.013798654000084,
+      "State DOFs": 33926,
+      "Final L2": 0.058990642715068695,
+      "Energy error": 0.006488331482520376,
+      "RMS divergence": 2.9166531252124005e-17
+    }
+  ],
+  "cache_validation": {
+    "changed_topology_signature_before": "d6ee981fd9745892",
+    "changed_topology_signature_after": "d3ce9d1d57a23ebd",
+    "coarsened_parents": 3,
+    "cold_wall_s": 2.0379737839999734,
+    "warm_wall_s": 0.004475118999948791,
+    "cache_hits": {
+      "geometry": 1,
+      "subface": 1,
+      "modal": 1
+    },
+    "cache_misses": {
+      "geometry": 3,
+      "subface": 3,
+      "modal": 3
+    }
+  },
+  "backends": {
+    "CPU_NUMPY_SCIPY": {
+      "status": "executed"
+    },
+    "GPU_CUPY": {
+      "status": "generated_not_executed",
+      "reason": "no CUDA/CuPy GPU execution available in this environment"
+    }
+  },
+  "limits": [
+    "Modal branch remains less accurate than sparse subface branch at matched topology in current localized-vortex tests.",
+    "Robust CPU runtime advantage of modal over sparse was not demonstrated; current difference is within noise.",
+    "Dynamic topology transfer still uses subface helper representation.",
+    "No ANSYS or production-CFD equivalence/speed claim.",
+    "GPU backend is code-generated only, not validated."
+  ]
+}
