@@ -1,0 +1,2 @@
+"""TAY Language version metadata."""
+__version__ = "0.8.0.dev2"

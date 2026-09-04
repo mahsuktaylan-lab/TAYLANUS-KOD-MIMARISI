@@ -1,0 +1,31 @@
+BACKEND NUMPY
+BOUNDARY WRAP
+
+PARAM n=12, steps=25
+PARAM dt=0.05, Du=0.16, Dv=0.08
+PARAM ux=0.10, uy=-0.04, uz=0.02
+PARAM hx=1.0, hy=1.0, hz=1.0
+PARAM feed=0.035, kill=0.060
+
+FIELD U = ONES(n,n,n)
+FIELD V = ZEROS(n,n,n)
+REGION U[4:8,4:8,4:8] = 0.50
+REGION V[4:8,4:8,4:8] = 0.25
+
+FUNC ADVECT(Q, ux, uy, uz, hx, hy, hz)
+    RETURN ux * DX(Q,hx) + uy * DY(Q,hy) + uz * DZ(Q,hz)
+END
+
+REPEAT steps
+    R = U * V * V
+    NEXT U = U + dt * (Du * LAPLACE(U,hx,hy,hz) - ADVECT(U,ux,uy,uz,hx,hy,hz) - R + feed * (1 - U))
+    NEXT V = V + dt * (Dv * LAPLACE(V,hx,hy,hz) - ADVECT(V,ux,uy,uz,hx,hy,hz) + R - (feed + kill) * V)
+    COMMIT
+    TRACE mass = SUM(U) + SUM(V)
+END
+
+SAVE U TO "output/U_final.npy"
+SAVE V TO "output/V_final.npy"
+SAVE TRACE_mass TO "output/mass_trace.csv"
+PLOT SLICE V Z 6 TO "output/V_slice.png"
+PLOT TRACE mass TO "output/mass_trace.png"

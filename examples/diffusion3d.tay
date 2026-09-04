@@ -1,0 +1,5 @@
+BOUNDARY ZERO
+REPEAT 20
+    NEXT A = A + alpha * (AVG26(A) - A)
+    COMMIT
+END

@@ -1,0 +1,8 @@
+SCALAR threshold = 10
+TOTAL = SUM(A)
+
+IF TOTAL > threshold
+    B = CLIP(A, 0, 1)
+ELSE
+    B = A
+END

@@ -1,0 +1,30 @@
+%% Setup
+BACKEND NUMPY
+PARAM n=8, steps=5
+PARAM dt=0.05, D=0.10
+FIELD A = ZEROS(n,n,n)
+A[2:6,2:6,2:6] = 1
+
+%% Inspect a plane
+plane = A[:,:,4]
+SUM(plane)
+
+%% Define evolution
+FUNC STEP(Q, dt, D)
+    RETURN Q + dt * D * LAPLACE(Q,1,1,1)
+END
+
+%% Evolve
+REPEAT steps
+    NEXT A = STEP(A,dt,D)
+    COMMIT
+    TRACE mass = SUM(A)
+END
+SUM(A)
+
+%% Inspect without REGION syntax
+center = A[2:6,2:6,2:6]
+MEAN(center)
+
+%% Save diagnostic
+SAVE TRACE_mass TO "output/notebook_mass.csv"

@@ -1,0 +1,7 @@
+TABLE T = CSV("data/study.csv")
+KEEP T = age, sex, ddimer, outcome
+FILL T.ddimer = MEDIAN
+FILTER T WHERE age >= 50 AND ddimer > 500
+SORT T BY ddimer DESC
+GROUP G = T BY sex SUMMARIZE age:MEAN, ddimer:MEDIAN, outcome:MEAN
+SAVE G TO "output/group_summary.csv"

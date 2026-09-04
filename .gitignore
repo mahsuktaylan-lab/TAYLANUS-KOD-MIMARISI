@@ -5,8 +5,15 @@ __pycache__/
 
 # Virtual environments
 .venv/
+.tay-venv/
+.smoke-venv/
+.smoke-*-venv/
 venv/
 env/
+
+# Packaging intermediates (built wheels under dist/ are retained)
+build/
+*.egg-info/
 
 # Tool caches
 .pytest_cache/

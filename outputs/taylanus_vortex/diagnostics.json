@@ -1,0 +1,128 @@
+{
+  "engine": "TAYLANUS",
+  "engine_version": "3.0.0-research",
+  "status": "PASS",
+  "config": {
+    "resolution": 32,
+    "dt": 0.005,
+    "tend": 0.2,
+    "mode": "AUTO",
+    "viscosity": 0.0033333333333333335,
+    "output": "../outputs/taylanus_vortex",
+    "reference": "../references/localized_vortex_N32_t0p20.npy",
+    "slice_index": 16,
+    "planner_reps": 3
+  },
+  "resolution": 32,
+  "steps": 40,
+  "leaf_count": 2402,
+  "representation": "SUBFACE_SPARSE",
+  "state_dofs": 29364,
+  "subface_dofs": 29364,
+  "compression_vs_subface": 1.0,
+  "geometry_compile_s": 0.08145840000361204,
+  "subface_compile_s": 12.38141569995787,
+  "modal_setup_s": 1.633947299909778,
+  "topology_ir_setup_s": 12.921755600022152,
+  "planner_s": 2.2166947999503464,
+  "runtime_s": 1.0219659000867978,
+  "kinetic_energy_initial": 0.00028426737222169557,
+  "kinetic_energy_final": 0.000279597493998419,
+  "rms_divergence": 1.8287457244460903e-17,
+  "max_divergence": 1.946972788330584e-15,
+  "reference_relative_l2": 0.05311733082469636,
+  "reference_path": "C:\\Users\\TAYLAN\\Documents\\ChatGPT\\ANACONDA çalışmaları\\TAYLANUS-KOD-MIMARISI\\references\\localized_vortex_N32_t0p20.npy",
+  "planner": [
+    {
+      "Representation": "SUBFACE_SPARSE",
+      "State DOFs": 29364,
+      "State MiB": 0.224029541015625,
+      "Compression vs subface": 1.0,
+      "Extra modal setup s": 0.0,
+      "Median RK2 step ms": 10.086300084367394,
+      "Predicted cold runtime contribution s": 0.4034520033746958,
+      "Selected": true,
+      "Objective": "AUTO"
+    },
+    {
+      "Representation": "MODAL_STREAM",
+      "State DOFs": 11329,
+      "State MiB": 0.08643341064453125,
+      "Compression vs subface": 2.5919322093741726,
+      "Extra modal setup s": 1.633947299909778,
+      "Median RK2 step ms": 7.4714000802487135,
+      "Predicted cold runtime contribution s": 1.9328033031197265,
+      "Selected": false,
+      "Objective": "AUTO"
+    }
+  ],
+  "planner_metrics": {
+    "SUBFACE_SPARSE": {
+      "representation": "SUBFACE_SPARSE",
+      "state_dofs": 29364,
+      "state_bytes": 234912,
+      "extra_setup_s": 0.0,
+      "step_median_s": 0.010086300084367394,
+      "compression_vs_subface": 1.0
+    },
+    "MODAL_STREAM": {
+      "representation": "MODAL_STREAM",
+      "state_dofs": 11329,
+      "state_bytes": 90632,
+      "extra_setup_s": 1.633947299909778,
+      "step_median_s": 0.0074714000802487135,
+      "compression_vs_subface": 2.5919322093741726
+    }
+  },
+  "cache_before": {
+    "hits": {
+      "geometry": 0,
+      "subface": 0,
+      "modal": 0
+    },
+    "misses": {
+      "geometry": 0,
+      "subface": 0,
+      "modal": 0
+    }
+  },
+  "cache_after": {
+    "hits": {
+      "geometry": 0,
+      "subface": 0,
+      "modal": 0
+    },
+    "misses": {
+      "geometry": 1,
+      "subface": 1,
+      "modal": 1
+    }
+  },
+  "pressure_field_available": false,
+  "pressure_plot_written": false,
+  "backend": {
+    "tay_backend": "NUMPY",
+    "taylanus_runtime": "CPU NumPy/Numba/SciPy",
+    "gpu_validated": false
+  },
+  "environment": {
+    "python": "3.14.6",
+    "executable": "C:\\Users\\TAYLAN\\Documents\\ChatGPT\\ANACONDA çalışmaları\\TAYLANUS-KOD-MIMARISI\\.smoke-final-venv\\Scripts\\python.exe",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "numpy": "2.5.2"
+  },
+  "conservative_divergence_slice_max_abs": 2.5870121187473043e-16,
+  "outputs": {
+    "mesh_level_slice": "C:\\Users\\TAYLAN\\Documents\\ChatGPT\\ANACONDA çalışmaları\\TAYLANUS-KOD-MIMARISI\\outputs\\taylanus_vortex\\mesh_level_slice.png",
+    "level_distribution": "C:\\Users\\TAYLAN\\Documents\\ChatGPT\\ANACONDA çalışmaları\\TAYLANUS-KOD-MIMARISI\\outputs\\taylanus_vortex\\level_distribution.png",
+    "velocity_magnitude_slice": "C:\\Users\\TAYLAN\\Documents\\ChatGPT\\ANACONDA çalışmaları\\TAYLANUS-KOD-MIMARISI\\outputs\\taylanus_vortex\\velocity_magnitude_slice.png",
+    "vorticity_magnitude_slice": "C:\\Users\\TAYLAN\\Documents\\ChatGPT\\ANACONDA çalışmaları\\TAYLANUS-KOD-MIMARISI\\outputs\\taylanus_vortex\\vorticity_magnitude_slice.png",
+    "divergence_slice": "C:\\Users\\TAYLAN\\Documents\\ChatGPT\\ANACONDA çalışmaları\\TAYLANUS-KOD-MIMARISI\\outputs\\taylanus_vortex\\divergence_slice.png",
+    "kinetic_energy_history": "C:\\Users\\TAYLAN\\Documents\\ChatGPT\\ANACONDA çalışmaları\\TAYLANUS-KOD-MIMARISI\\outputs\\taylanus_vortex\\kinetic_energy_history.png",
+    "energy_csv": "C:\\Users\\TAYLAN\\Documents\\ChatGPT\\ANACONDA çalışmaları\\TAYLANUS-KOD-MIMARISI\\outputs\\taylanus_vortex\\kinetic_energy.csv",
+    "diagnostics_json": "C:\\Users\\TAYLAN\\Documents\\ChatGPT\\ANACONDA çalışmaları\\TAYLANUS-KOD-MIMARISI\\outputs\\taylanus_vortex\\diagnostics.json",
+    "velocity_npy": "C:\\Users\\TAYLAN\\Documents\\ChatGPT\\ANACONDA çalışmaları\\TAYLANUS-KOD-MIMARISI\\outputs\\taylanus_vortex\\velocity_final.npy",
+    "mesh_levels_npy": "C:\\Users\\TAYLAN\\Documents\\ChatGPT\\ANACONDA çalışmaları\\TAYLANUS-KOD-MIMARISI\\outputs\\taylanus_vortex\\mesh_levels.npy",
+    "divergence_npy": "C:\\Users\\TAYLAN\\Documents\\ChatGPT\\ANACONDA çalışmaları\\TAYLANUS-KOD-MIMARISI\\outputs\\taylanus_vortex\\conservative_divergence.npy"
+  }
+}

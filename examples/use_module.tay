@@ -1,0 +1,2 @@
+USE "math_module.tay"
+B = DIFFUSE(A, alpha)

@@ -1,0 +1,14 @@
+BOUNDARY WRAP
+
+FUNC ADVECT(Q, ux, uy, uz, hx, hy, hz)
+    RETURN ux * DX(Q,hx) + uy * DY(Q,hy) + uz * DZ(Q,hz)
+END
+
+REPEAT steps
+    R = U * V * V
+    NEXT U = U + dt * (Du * LAPLACE(U,hx,hy,hz) - ADVECT(U,ux,uy,uz,hx,hy,hz) - R + feed * (1 - U))
+    NEXT V = V + dt * (Dv * LAPLACE(V,hx,hy,hz) - ADVECT(V,ux,uy,uz,hx,hy,hz) + R - (feed + kill) * V)
+    COMMIT
+END
+
+MASS = SUM(U) + SUM(V)

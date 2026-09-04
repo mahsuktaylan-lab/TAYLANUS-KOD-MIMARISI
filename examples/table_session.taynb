@@ -1,0 +1,24 @@
+%% Load
+TABLE T = CSV("data/study.csv")
+ROWS(T)
+
+%% Select and clean
+KEEP T = age, sex, ddimer, outcome
+FILL T.ddimer = MEDIAN
+MISSINGCOUNT(T,"ddimer")
+
+%% Filter
+threshold = 50
+FILTER T WHERE age >= threshold AND ddimer > 500
+ROWS(T)
+
+%% Inspect column
+ages = COL(T,"age")
+MEAN(ages)
+
+%% Group
+GROUP G = T BY sex SUMMARIZE age:MEAN, ddimer:MEDIAN, outcome:MEAN
+ROWS(G)
+
+%% Save
+SAVE G TO "output/notebook_group.csv"

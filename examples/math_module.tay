@@ -1,0 +1,3 @@
+FUNC DIFFUSE(A, alpha)
+    RETURN A + alpha * (AVG26(A) - A)
+END

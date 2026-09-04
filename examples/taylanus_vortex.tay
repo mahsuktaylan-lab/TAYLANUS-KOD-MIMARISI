@@ -1,0 +1,19 @@
+# TAY Language v0.8 + TAYLANUS v3
+# Localized, periodic, incompressible-vortex reference case (Re=300).
+#
+# BACKEND controls ordinary TAY arrays. ENGINE selects the CFD solver.
+BACKEND NUMPY
+ENGINE TAYLANUS
+
+RESOLUTION 32
+DT 0.005
+TEND 0.20
+MODE AUTO
+VISCOSITY 0.0033333333333333335
+SLICE 16
+PLANNER_REPS 3
+
+REFERENCE "../references/localized_vortex_N32_t0p20.npy"
+OUTPUT "../outputs/taylanus_vortex"
+
+RUN TAYLANUS

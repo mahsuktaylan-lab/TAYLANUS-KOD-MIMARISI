@@ -1,58 +1,138 @@
-# TAYLANUS v3.0 — Stable Research Core
+# (.tay) KOD MİMARİSİ
 
-TAYLANUS is a research computing architecture built around the abstraction:
+TAY Language v0.8 and TAYLANUS v3 now form one installable research workflow:
 
-**field + direction + scale + neighbor relation → mathematical operator**
+- **TAY Language** is the readable scientific-programming and orchestration
+  layer.
+- **TAYLANUS** is the adaptive incompressible-flow research solver.
+- **TAYLANUS remains the solver source of truth.** The language adapter calls
+  the existing `UnifiedTaylanusIR`, planner, time-step and projection APIs; it
+  does not reimplement the CFD equations.
 
-v3.0 consolidates the experimentally developed v2.x line into one reproducible CPU research core.
+The integration release is `taylang 0.8.0.dev2`. TAYLANUS keeps its
+`3.0.0-research` identity.
 
-## Validated CPU representations
+## Install
 
-- `SUBFACE_SPARSE`: sparse active face-normal DOFs; current default for `FAST`/`AUTO`.
-- `MODAL_STREAM`: local face modes (mean + tangential slopes); current `COMPACT` choice.
+On Windows:
 
-Both use the same octree topology, sparse direction+scale+neighbor operator substrate, and compatible pressure projection.
-
-## v3.0 release gates
-
-All four packaged numerical regression cases passed:
-
-- 32³-equivalent `SUBFACE_SPARSE`
-- 32³-equivalent `MODAL_STREAM`
-- 64³-equivalent `SUBFACE_SPARSE`
-- 64³-equivalent `MODAL_STREAM`
-
-The release also passed planner-policy and topology-cache gates.
-
-Run:
-
-```bash
-python tests/run_regression.py
+```powershell
+.\install_windows.ps1
+.\.tay-venv\Scripts\tay.exe doctor
 ```
 
-## Current planner policy
+On any supported Python 3.10+ environment:
 
-- `FAST` → `SUBFACE_SPARSE`
-- `AUTO` → `SUBFACE_SPARSE`
-- `COMPACT` → `MODAL_STREAM`
+```bash
+python -m pip install ".[taylanus]"
+tay doctor
+```
 
-The modal branch is not claimed to be faster on CPU; its demonstrated advantage is state compression. At 64³-equivalent resolution it used 33,926 modal state DOFs versus 125,520 sparse-subface state DOFs (~3.70× compression), with an accuracy cost.
+See [INSTALL.md](INSTALL.md) for wheel installation, verification and Windows
+troubleshooting.
 
-## GPU status
+## Run the real CFD example
 
-`backends/taylanus_gpu_cupy_generated.py` is **generated only**. It has not been executed or validated on CUDA hardware in this release.
+```powershell
+.\.tay-venv\Scripts\tay.exe run examples\taylanus_vortex.tay
+```
+
+The TAY source is intentionally small:
+
+```tay
+BACKEND NUMPY
+ENGINE TAYLANUS
+
+RESOLUTION 32
+DT 0.005
+TEND 0.20
+MODE AUTO
+VISCOSITY 0.0033333333333333335
+REFERENCE "../references/localized_vortex_N32_t0p20.npy"
+OUTPUT "../outputs/taylanus_vortex"
+
+RUN TAYLANUS
+```
+
+`BACKEND` and `ENGINE` are separate:
+
+- `BACKEND NUMPY|TORCH|GPU` selects the ordinary TAY array/device runtime.
+- `ENGINE TAYLANUS` selects the CFD solver.
+- TAYLANUS v3 is validated only on CPU NumPy/Numba/SciPy. A GPU or Torch
+  TAYLANUS request fails closed; it never silently falls back to CPU.
+
+## CFD outputs
+
+The example writes real solver-derived data under
+`outputs/taylanus_vortex/`:
+
+- adaptive mesh-level slice and level distribution;
+- velocity-magnitude and vorticity-magnitude slices;
+- conservative finite-volume divergence slice;
+- kinetic-energy history;
+- numerical CSV and JSON diagnostics;
+- final velocity, mesh level and divergence NumPy arrays.
+
+No pressure plot is fabricated. The frozen core does not expose a pressure
+field as a public result, so the report records
+`pressure_field_available=false`.
+
+## Architecture
+
+```text
+.tay source
+   ├─ BACKEND -> NumPy / Torch / CUDA array runtime
+   └─ ENGINE TAYLANUS
+         -> validated CFD configuration
+         -> topology + UnifiedCompileCache
+         -> UnifiedTaylanusIR
+         -> planner
+              ├─ SUBFACE_SPARSE
+              └─ MODAL_STREAM
+         -> existing RK2 + pressure projection
+         -> diagnostics + reproducible outputs
+```
+
+The CFD bridge is implemented in `taylang/engines/taylanus.py`; the unchanged
+solver remains in `taylanus_core.py`.
+
+## Validation
+
+Current Windows verification:
+
+- original TAY v0.8 baseline: **83 passed, 0 failed, 0 skipped**;
+- combined TAY + bridge suite: **98 passed, 0 failed, 0 skipped**;
+- TAYLANUS numerical regression: **4/4 cases passed**;
+- isolated wheel, console command and `site-packages` import smoke: **PASS**;
+- Windows installer with automatic interpreter fallback: **PASS**.
+
+The NF=32, t=0.20 example reproduced:
+
+- representation: `SUBFACE_SPARSE`;
+- leaf count: 2,402;
+- state DOFs: 29,364;
+- relative reference L2: 0.05311733082469636;
+- RMS conservative divergence: 1.8287457244460903e-17.
+
+Exact commands and environment evidence are in
+`reports/TAY_TAYLANUS_INTEGRATION_REPORT.md`.
 
 ## Scientific scope
 
-This is a research CFD prototype. It does **not** establish:
+This is a stable **research core** plus a developer-preview language. It does
+not establish ANSYS equivalence, production CFD validation, general speed
+superiority or validated GPU performance. The localized periodic-vortex case
+is a short-time validation problem favorable to local adaptivity. See
+`docs/KNOWN_LIMITATIONS.md` and `docs/TAYLANUS_ENGINE.md`.
 
-- equivalence to ANSYS or other production CFD solvers,
-- general CFD speed superiority,
-- production-grade AMR/MAC correctness,
-- validated GPU performance.
+## Development gates
 
-See `docs/KNOWN_LIMITATIONS.md`.
+```powershell
+.\.venv\Scripts\python.exe -m pytest -q -o addopts= -ra
+.\.venv\Scripts\python.exe tests\run_regression.py
+.\.venv\Scripts\python.exe benchmarks\run_benchmarks.py
+.\.venv\Scripts\python.exe -m build --wheel --no-isolation
+```
 
-## Release lineage
-
-v3.0 stabilizes the work through v2.23 rather than adding a new numerical method.
+The integration lives on `feature/tay-taylanus-integration`; `main` is not
+merged automatically.

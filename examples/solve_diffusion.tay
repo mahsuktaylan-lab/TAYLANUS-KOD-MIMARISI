@@ -1,0 +1,8 @@
+BOUNDARY ZERO
+SCALAR eps = 0.001
+
+FUNC STEP(A, alpha)
+    RETURN A + alpha * (AVG26(A) - A)
+END
+
+SOLVE A = STEP(A, alpha) UNTIL CHANGE < eps MAX 500

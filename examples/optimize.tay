@@ -1,0 +1,4 @@
+FUNC LOSS(x)
+    RETURN (x - 3) * (x - 3)
+END
+OPTIMIZE x = LOSS(x) LR 0.1 UNTIL CHANGE < 1e-6 MAX 500
